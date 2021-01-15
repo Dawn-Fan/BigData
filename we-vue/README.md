@@ -1,4 +1,4 @@
-# wechat-vue
+# we-vue
 
 ## Project setup
 ```
