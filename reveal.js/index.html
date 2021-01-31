@@ -1,40 +1,86 @@
-<!doctype html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+@ -0,0 +1,85 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
 
-		<title>reveal.js</title>
+    <title>reveal.js</title>
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" id="theme" />
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
+    <!-- Theme used for syntax highlighted code -->
+    <link
+      rel="stylesheet"
+      href="plugin/highlight/monokai.css"
+      id="highlight-theme"
+    />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-markdown>### 文本比对汇报</section>
+        <section>
+          <section>简介</section>
+          <section data-markdown style="font-size: xx-large">
+            * 文件间的差异对比是目前多人协作工具提供的一个重要功能，在一些软件开发工具中有所提供。
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+            * 主要目的是为了在多人协作的模式中，假设出现文件修改冲突，开发人员可以通过文件对比找出冲突原因并进行处理，从而降低开发人员的工作量。
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+            * 文件差异对比算法的本质其实是最长公共子序列算法（LCS），只不过目前文件差异对比可能会允许近似解。目前最长公共子序列算法的时间复杂度为O(n^2)。
+          </section>
+          <section style="font-size: xx-large" data-markdown>
+            * 求解LCS问题，不能使用暴力搜索方法。一个长度为n的序列拥有2的n次方个子序列，它的时间复杂度是指数级。因此解决LCS问题，需要借助动态规划的思想。
+            
+            * 动态规划算法与分治法类似，其基本思想也是将待求解问题分解成若干个子问题，先求解子问题
+          </section>
+        </section>
+
+        <section>
+          <section>
+            国内外论文
+          </section>
+          <section>
+            <h5>[1]李明, 《文本文件差异对比算法研究》, 软件, 卷 38, 期 12, 页 216–219, 2017.</h5>
+            <div style="font-size:medium">
+              摘要   ： 如今各种项目的规模越来越大,而一个人的能力和精力是有限的,因此通常需要有一个团队进行协作开发。在协作开发时,不可避免的会产生工作交叉,甚至冲突。目前常见的多人协作工具如git、svn等,都提供了对不同版本的文件进行差异对比,由此来为开发人员提供帮助。在文本文件的差异对比算法中,它的核心是最长公共子序列算法。因此在这篇论文中,我们首先将对常见的最长公共子序列算法进行探讨,在之后将对一种优化后的LCS算法进行详细分析。
+
+            </div>
+          </section>
+          <section data-markdown>
+            * Marcelais M R, Sullivan S T, Hilke J C. Hash-based file comparison: US, US 8543543 B2[P]. 2013.
+
+            * Fuchs C. File comparison of locally synched files: US, US7228319[P]. 2007.
+
+          </section>
+
+        </section>
+
+        <!-- <section>
+          <section>研究现状</section>
+        </section> -->
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
 </html>
