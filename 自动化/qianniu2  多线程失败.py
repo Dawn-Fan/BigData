@@ -1,15 +1,26 @@
 import time
+import threading
 
-from playwright import sync_playwright
+from playwright import sync_playwright, async_playwright
+import asyncio
+
 
 def edit(page,index,address):
+    # print("asd")
+    # print("sad")
     clickname = "//tbody/tr["+str(index)+"]/td[9]/div[1]/div[1]/div[1]/div[1]/button[1]"
-    # print(clickname)
-    # time.sleep(5)
-    # print("OK ")
+    # print(clickname.replace("\n",""))
+    # await time.sleep(1)
+    # asyncio.sleep(1)
     with page.expect_popup() as popup_info:
         page.click(clickname)
     page2 = popup_info.value
+    # print(page2)
+    # print("123")
+
+    page2.fill("input[placeholder=\"最多允许输入30个汉字（60字符）\"]", "as打动")
+    # print("123")
+    # time.sleep(123)
 
     # Click text="使用物流配送"
     # page2.click("text=\"使用物流配送\"")
@@ -33,6 +44,19 @@ def edit(page,index,address):
     # Close page
     page2.close()
 
+
+class myThread(threading.Thread):
+    def __init__(self,threadID,index,page):
+        threading.Thread.__init__(self)
+        self.threadID = threadID
+        self.index = index
+        self.page = page
+        # self.func=func
+    def run(self):
+        print("run")
+        edit(self.page,5,'安阳')
+        print("完成",self.threadID)
+
 def run(playwright):
     browser = playwright.chromium.launch(headless=False)
     context = browser.newContext(storageState="cookie")
@@ -55,8 +79,16 @@ def run(playwright):
     page1.click("img[alt=\"WanXiang Logo\"]")
 
     # Click //tr[7]/td[9]/div/div/div/div/button[1][normalize-space(.)='编辑商品' and normalize-space(@title)='编辑商品']
-    edit(page1,7,"安阳")      #一个窗口
-    edit(page1, 7, "安阳")
+    # asyncio.edit(page1,7,"安阳")      #一个窗口
+    # asyncio.edit(page1, 7, "安阳")
+    thead1 = myThread(2,3,page1)
+    # thead1.setDaemon(True)
+    thead1.start()
+    # print(threading.active_count())
+    # print("123")
+    thead1.join()
+    # edit(page1,5,"安阳")
+    # asyncio.run(edit(page1, 7, "安阳"))
     # Close page
     page1.close()
 
@@ -67,5 +99,9 @@ def run(playwright):
     context.close()
     browser.close()
 
+
 with sync_playwright() as playwright:
+    # from gevent import monkey
+    #
+    # monkey.patch_all()
     run(playwright)
