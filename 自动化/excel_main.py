@@ -10,6 +10,7 @@ class excel:
         # print(self.excel_file)
         data.append(self.excel_file.loc[index][0])
         data.append(self.excel_file.loc[index][1])
+        print("当前序号======",index,'\n')
         return data[0],self.commodity_name+data[1]
 
 

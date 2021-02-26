@@ -6,8 +6,6 @@ import excel_main as ex
 
 def edit(page,index,address1,address2):
     clickname = "//tbody/tr["+str(index)+"]/td[9]/div[1]/div[1]/div[1]/div[1]/button[1]"
-    # await time.sleep(1)
-    # asyncio.sleep(1)
     with page.expect_popup() as popup_info:
         page.click(clickname)
     page2 = popup_info.value
@@ -15,17 +13,15 @@ def edit(page,index,address1,address2):
 
 def  run_page_edit(page2,address1,address2): #这是进入编辑页面后的操作
     # page2.reload(0,"domcontentloaded")
+    time.sleep(2)
     page2.fill("input[placeholder=\"最多允许输入30个汉字（60字符）\"]",address2)
-
-    # time.sleep(3000)
-    # print("123")
-    # time.sleep(123)
+    time.sleep(2)
 
     # Click text="使用物流配送"
-    page2.click("text=\"使用物流配送\"")
+    # page2.click("text=\"使用物流配送\"")
     # page2.check("//html[1]/body[1]/div[4]/div[1]/div[1]/div[5]/div[1]/div[8]/div[6]/div[1]/div[2]/div[1]/div[1]/div[1]/span[1]/div[1]/div[1]/div[1]/label[1]/span[1]/input[1]")
     # Click //div[normalize-space(.)='运费模板 新建运费模板刷新模板数据']/div[2]/span
-    time.sleep(3)
+    # time.sleep(3)
 
     # page2.click("//body/div[@id='root']/div[@id='_root']/div[@id='ROOT']/div[@id='struct-content']/div[@id='struct-card']/div[@id='deliver-card']/div[@id='struct-tbExtractWay']/div[1]/div[2]/div[1]/div[1]/div[1]/span[1]/div[1]/div[2]/div[1]/div[1]/div[2]/span[1]/span[1]")
     page2.click(
@@ -83,57 +79,70 @@ def run(playwright):
     # with open("sum.txt",'r') as p:
     #     sum = p.read()
     while_count=300
-    sum = 502
-    # int(sum)
+
     sleeptime = 1
     # page1.setDefaultTimeout(6)
     # page1.reload("domcontentloaded")
     f = ex.excel("./地址.xlsx","38节鲜花速递康乃馨玫瑰混搭花束送长辈")
-    while (while_count>0):
-        while_count -= 5
+    with open("sum.txt","r+") as file:
+        sum = int(file.read())
 
-        address1, address2 = f.getdata(sum)
-        # address1 = "安阳"
-        print(address1,address2)
-        edit(page1,1, address1,address2)
-        time.sleep(sleeptime)
-        sum += 1
+        print("启动———————————————————— 序号=",sum,'\n')
+        while (sum<746):
+            while_count -= 5
 
 
-        address1, address2 = f.getdata(sum)
-        print(address1, address2)
-        edit(page1,3, address1,address2)
-        sum += 1
-        time.sleep(sleeptime)
-
-        address1, address2 = f.getdata(sum)
-        print(address1, address2)
-        edit(page1,5, address1,address2)
-        sum += 1
-        time.sleep(sleeptime)
-
-        address1, address2 = f.getdata(sum)
-        print(address1, address2)
-        edit(page1,7, address1,address2)
-        sum += 1
-        time.sleep(sleeptime)
-
-        address1, address2 = f.getdata(sum)
-        print(address1, address2)
-        edit(page1,9, address1,address2)
-        sum+=1
-        time.sleep(4)
+            address1, address2 = f.getdata(sum)
+            print(address1,address2)
+            edit(page1,1, address1,address2)
+            time.sleep(sleeptime)
+            sum += 1
+            file.seek(0,0)
+            file.truncate(0)
+            file.write(str(sum))
 
 
+            address1, address2 = f.getdata(sum)
+            print(address1, address2)
+            edit(page1,3, address1,address2)
+            sum += 1
+            file.seek(0, 0)
+            file.truncate(0)
+            file.write(str(sum))
+            time.sleep(sleeptime)
 
-        with open('sum.txt','w') as  o:
-            o.write(str(sum))
+            address1, address2 = f.getdata(sum)
+            print(address1, address2)
+            edit(page1,5, address1,address2)
+            sum += 1
+            file.seek(0, 0)
+            file.truncate(0)
+            file.write(str(sum))
+            time.sleep(sleeptime)
 
-        print(sum)
-        page1.reload(0, 'domcontentloaded')
-        time.sleep(2)
-        page1.reload(0, 'domcontentloaded')
-        time.sleep(2)
+            address1, address2 = f.getdata(sum)
+            print(address1, address2)
+            edit(page1,7, address1,address2)
+            sum += 1
+            file.seek(0, 0)
+            file.truncate(0)
+            file.write(str(sum))
+            time.sleep(sleeptime)
+
+            address1, address2 = f.getdata(sum)
+            print(address1, address2)
+            edit(page1,9, address1,address2)
+            sum+=1
+            file.seek(0, 0)
+            file.truncate(0)
+            file.write(str(sum))
+            time.sleep(4)
+
+            print("\n\n-------5个结束，sum=",sum,'\n')
+            page1.reload(0, 'domcontentloaded')
+            time.sleep(2)
+            page1.reload(0, 'domcontentloaded')
+            time.sleep(2)
 
 
 
